@@ -177,8 +177,6 @@ vercel
 ### Deploy to Other Platforms
 - Netlify
 - GitHub Pages
-- AWS Amplify
-- Railway.app
 
 ---
 
