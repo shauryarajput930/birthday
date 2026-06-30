@@ -1,19 +1,19 @@
-# 🎂 Birthday Surprise Website
+# 🎂 Birthday Surprise Website — For Anshika (Friendship Edition)
 
-A beautiful, interactive birthday surprise website built using **Next.js + Framer Motion** — perfect for celebrating someone special on their birthday! 🎉💖
+An elegant, friendship-themed birthday surprise website built with **Next.js + Framer Motion** — made to celebrate Anshika in a warm, platonic way. The site focuses on smooth animations, thoughtful micro-interactions, and accessibility.
 
 ---
 
 ## ✨ Features
 
-- 🎬 **Loader Screen** – Eye-catching intro animation to start the journey
-- 📝 **Introduction Screen** – Personalized birthday greeting message
-- 🎂 **Interactive Cake Screen** – Click the cake for a delightful surprise
-- 📸 **Photos Gallery** – Beautiful slideshow to relive memories
-- 💌 **Special Message** – Heartfelt personalized message with typewriter effect
-- 🎵 **Background Music** – Birthday song playing throughout the experience
-- ✨ **Smooth Animations** – Framer Motion for stunning transitions
-- 📱 **Fully Responsive** – Works perfectly on desktop, tablet, and mobile
+- 🎬 **Loader Screen** – Eye-catching intro that builds anticipation
+- 📝 **Introduction Screen** – Personalized, friendship-focused greeting for Anshika
+- 🎂 **Interactive Cake Screen** – Light the candle to trigger a subtle celebration
+- 📸 **Photos Gallery** – Touch-friendly, swipeable memory cards
+- 💌 **Special Message** – A platonic, heartfelt message revealed with a typewriter effect
+- 🎵 **Background Music** – Optional background audio with user-friendly controls
+- ✨ **Accessible Animations** – Animations respect `prefers-reduced-motion` and can be throttled for mobile
+- 📱 **Responsive by Design** – Optimized for mobile and desktop with graceful degradation
 
 ---
 
@@ -34,20 +34,17 @@ A beautiful, interactive birthday surprise website built using **Next.js + Frame
 - Node.js (v16 or higher)
 - npm or yarn
 
-### Installation
+### Installation & Run (development)
 
 ```bash
-# Navigate into the project folder
-cd "d:\PSIT\Sem 4\Birthday"
-
-# Install dependencies
+# From the project root
 npm install
 
-# Start the development server
+# Start the development server (Next will pick an available port if 3000 is in use)
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
+Open the local URL shown in the terminal (for example: `http://localhost:3000` or `http://localhost:3001`).
 
 ---
 
@@ -87,29 +84,23 @@ Birthday/
 ## 🎨 Customization Guide
 
 ### 1. Edit the Birthday Message
-Update the message in [src/components/screens/MessageScreen.jsx](src/components/screens/MessageScreen.jsx):
+Update the message in `src/components/screens/MessageScreen.jsx`:
 ```jsx
 const fullMessage = `Your personalized birthday message here...`;
 ```
 
 ### 2. Add Photos
 1. Place your photos in `public/images/`
-2. Update the photo references in [src/components/screens/PhotosScreen.jsx](src/components/screens/PhotosScreen.jsx)
+2. `PhotosScreen` now uses `next/image` for optimized loading — keep sizes reasonable (e.g., 1200px longest side) to save bandwidth.
 
 ### 3. Change Background Music
-Replace `happy_birthday_song.mp4` in the `public/` folder with your own audio/video file.
+Replace `happy_birthday_song.mp4` in the `public/` folder with your audio/video file. The app uses `preload="metadata"` so the browser loads minimal info up front; playback will start on interaction if autoplay is blocked.
 
-### 4. Customize Colors
-Edit Tailwind color classes in the component files. Look for gradient classes like:
-```jsx
-className="bg-gradient-to-r from-pink-400 via-fuchsia-400 to-purple-400"
-```
+### 4. Customize Colors & Typography
+Modify Tailwind classes in components or adjust `globals.css` variables for global style tokens.
 
 ### 5. Update Creator Attribution
-Change the watermark in [src/app/page.jsx](src/app/page.jsx):
-```jsx
-@Shaurya Rajput
-```
+Change the watermark in `src/app/page.jsx`.
 
 ---
 
@@ -119,46 +110,42 @@ Change the watermark in [src/app/page.jsx](src/app/page.jsx):
 |--------|---------|-------------|
 | **Loader Screen** | Builds anticipation | Auto-progresses |
 | **Intro Screen** | Sets the mood | Button to continue |
-| **Cake Screen** | Main surprise | Click cake for effect |
-| **Photos Screen** | Memory gallery | Swipe through photos |
-| **Message Screen** | Personal message | Typewriter animation |
+| **Cake Screen** | Main surprise | Light candle to reveal celebration |
+| **Photos Screen** | Memory gallery | Swipe the cards (touch-friendly) |
+| **Message Screen** | Personal message | Typewriter animation (ARIA-friendly) |
 
 ---
 
 ## 🎵 Audio Setup
 
-The background music plays automatically (or on first user click if autoplay is blocked). The audio file:
-- Loops continuously throughout the experience
-- Plays at 50% volume for comfort
-- Supports `.mp4` video files with audio tracks
+Background audio behavior:
+- Attempts autoplay, but will start on first user interaction if blocked by the browser.
+- Volume is set to a comfortable level by default; consider adding a UI control if you want users to toggle audio.
+
+The audio file lives in `public/happy_birthday_song.mp4` and supports common container formats.
 
 ---
 
-## 📱 Browser Support
+## 📱 Browser & Accessibility Notes
 
-- ✅ Chrome/Edge (latest)
-- ✅ Firefox (latest)
-- ✅ Safari (latest)
-- ✅ Mobile browsers
+- Tested on modern Chrome, Firefox, Edge, and Safari.
+- Animations respect `prefers-reduced-motion` and particle density is throttled on small viewports for performance.
+- Images are optimized with `next/image` and the large GIFs are lazy/controlled to reduce CPU and memory use on mobile.
 
 ---
 
 ## 🐛 Troubleshooting
 
 ### Audio not playing?
-- Ensure `happy_birthday_song.mp4` exists in `public/` folder
-- Check browser console for errors
-- Allow autoplay permissions in browser settings
+- Ensure `public/happy_birthday_song.mp4` exists.
+- Check the browser console for autoplay or network errors.
 
 ### Photos not showing?
-- Verify image files are in `public/images/`
-- Check file paths in PhotosScreen component
-- Ensure image formats are supported (jpg, png, webp)
+- Verify image files exist in `public/images/` and are referenced with correct names.
 
-### Animations not smooth?
-- Update Framer Motion: `npm install framer-motion@latest`
-- Disable browser extensions that modify the DOM
-- Try a different browser
+### Animations feel heavy on mobile?
+- The app respects `prefers-reduced-motion`. You can toggle animation settings via the UI (if enabled) or reduce particle density by using smaller `density` in `ParticleEffects`.
+- Consider using `next/image`-friendly image sizes to lower memory usage.
 
 ---
 
@@ -167,27 +154,24 @@ The background music plays automatically (or on first user click if autoplay is 
 ### Deploy to Vercel (Recommended)
 
 ```bash
-# Install Vercel CLI
+# Install Vercel CLI (optional)
 npm install -g vercel
 
-# Deploy
+# Deploy from project root
 vercel
 ```
 
-### Deploy to Other Platforms
-- Netlify
-- GitHub Pages
+### Other platforms
+- Netlify, Cloudflare Pages, or a static hosting solution that supports Next.js builds.
 
 ---
 
 ## 📝 License
 
-This project is free to use and customize for personal celebrations and special occasions.
+This project is free to use and customize for personal celebrations.
 
 ---
 
-## 🎉 Made with ❤️
+## 🎉 Made with friendship
 
-Perfect for birthdays, anniversaries, and special celebrations! 
-
-**Happy Birthday!** 🎂✨
+Designed for a warm, platonic celebration for Anshika. Keep it kind and friendly. 🎈
